@@ -12,6 +12,20 @@ function newGame() {
     game.currentGame = [];
     game.playerMoves = [];
     showScore();
+    addTurn();
 };
 
-module.exports = {game, newGame, showScore}; // {} -> exporting more than one object/function from the file
+const addTurn = () => {
+    game.playerMoves = [];
+    game.currentGame.push(game.choices[Math.floor(Math.random() * 4)]);
+    //showTurns();
+}
+
+const lightsOn = ((circ) => {
+    document.getElementById(circ).classList.add("light");
+    setTimeout(() => {
+        document.getElementById(circ).classList.remove("light");
+    }, 400);
+})
+
+module.exports = {game, newGame, showScore, addTurn, lightsOn}; // {} -> exporting more than one object/function from the file
