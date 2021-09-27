@@ -3,7 +3,7 @@
  */
 
 // const M = require("minimatch");
-const {game} = require("../game");
+const {game, newGame, showScore} = require("../game");
 
 beforeAll(() => {
     let fs = require("fs");
@@ -14,6 +14,7 @@ beforeAll(() => {
 });
 
 describe("game object contains correct keys", () => {
+
     test("score key exists", () => {
         expect("score" in game).toBe(true);
     });
@@ -28,5 +29,36 @@ describe("game object contains correct keys", () => {
 
     test("choices exists", () => {
         expect("choices" in game).toBe(true);
+    });
+
+    test("choices contains the correct id's", () => {
+        expect(game.choices).toEqual(["button1", "button2", "button3", "button4"]);
+    });
+});
+
+describe("newGame works correctly", () => {
+    beforeAll(() => {
+        game.score = 42;
+        game.currentGame = ["button1", "button2"];
+        game.playerMoves = ["button1", "button2"];
+        document.getElementById("score").innerText = "42";
+        showScore();
+        newGame();
+    });
+
+    test("should set the game score to zero", () => {
+        expect(game.score).toEqual(0);
+    });
+
+    test("should clear the playerMoves array", () => {
+        expect(game.playerMoves.length).toBe(0);
+    });
+
+    test("should clear the currentGame array", () => {
+        expect(game.currentGame.length).toBe(0);
+    });
+
+    test("should display 0 for the element with id of score", () => {
+        expect(document.getElementById("score").innerText).toEqual(0);
     });
 });
