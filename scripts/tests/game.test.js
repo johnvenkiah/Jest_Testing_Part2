@@ -2,7 +2,6 @@
  * @jest-environment jsdom
  */
 
-// const M = require("minimatch");
 const {game, newGame, showScore, addTurn, lightsOn} = require("../game");
 
 beforeAll(() => {
@@ -19,19 +18,19 @@ describe("game object contains correct keys", () => {
         expect("score" in game).toBe(true);
     });
 
-    test("current game key exists", () => {
+    test("currentGame key exists", () => {
         expect("currentGame" in game).toBe(true);
     });
 
-    test("player moves exists", () => {
+    test("playerMoves key exists", () => {
         expect("playerMoves" in game).toBe(true);
     });
 
-    test("choices exists", () => {
+    test("choices key exists", () => {
         expect("choices" in game).toBe(true);
     });
 
-    test("choices contains the correct id's", () => {
+    test("choices contain correct id's", () => {
         expect(game.choices).toEqual(["button1", "button2", "button3", "button4"]);
     });
 });
@@ -42,12 +41,15 @@ describe("newGame works correctly", () => {
         game.currentGame = ["button1", "button2"];
         game.playerMoves = ["button1", "button2"];
         document.getElementById("score").innerText = "42";
-        showScore();
         newGame();
     });
 
     test("should set the game score to zero", () => {
         expect(game.score).toEqual(0);
+    });
+
+    test("should display 0 for the element with id of score", () => {
+        expect(document.getElementById("score").innerText).toEqual(0);
     });
 
     test("should clear the playerMoves array", () => {
@@ -56,10 +58,6 @@ describe("newGame works correctly", () => {
 
     test("should be one element in game array", () => {
         expect(game.currentGame.length).toBe(1);
-    });
-
-    test("should display 0 for the element with id of score", () => {
-        expect(document.getElementById("score").innerText).toEqual(0);
     });
 });
 
@@ -74,7 +72,7 @@ describe("gameplay works correctly", () => {
         game.score = 0;
         game.currentGame = [];
         game.playerMoves = [];
-    })
+    });
 
     test("addTurn adds a new turn to the game", () => {
         addTurn();
@@ -84,14 +82,6 @@ describe("gameplay works correctly", () => {
     test("should add correct class to light up the buttons", () => {
         let button = document.getElementById(game.currentGame[0]);
         lightsOn(game.currentGame[0]);
-        expect(button.classlist).toContain("light");
+        expect(button.classList).toContain(game.currentGame[0] + "light");
     });
-
-    // test("should be one element in game array", () => {
-    //     expect(game.currentGame.length).toBe(1);
-    // });
-
-    // test("should display 0 for the element with id of score", () => {
-    //     expect(document.getElementById("score").innerText).toEqual(0);
-    // });
 });

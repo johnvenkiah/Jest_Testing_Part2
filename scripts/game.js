@@ -5,8 +5,6 @@ let game = {
     choices: ["button1", "button2", "button3", "button4"],
 }
 
-const showScore = () => document.getElementById("score").innerText = game.score;
-
 function newGame() {
     game.score = 0;
     game.currentGame = [];
@@ -15,17 +13,25 @@ function newGame() {
     addTurn();
 };
 
-const addTurn = () => {
+// const addTurn = () => {
+//     game.playerMoves = [];
+//     game.currentGame.push(game.choices[(Math.floor(Math.random() * 4))]);
+//     //showTurns();
+// }
+
+function addTurn() {
     game.playerMoves = [];
-    game.currentGame.push(game.choices[Math.floor(Math.random() * 4)]);
-    //showTurns();
+    game.currentGame.push(game.choices[(Math.floor(Math.random() * 4))]);
+    // showTurns();
 }
 
-const lightsOn = ((circ) => {
-    document.getElementById(circ).classList.add("light");
+function lightsOn(circ) {
+    document.getElementById(circ).classList.add(circ + "light");
     setTimeout(() => {
-        document.getElementById(circ).classList.remove("light");
+        document.getElementById(circ).classList.remove(circ + "light");
     }, 400);
-})
+}
+
+const showScore = () => document.getElementById("score").innerText = game.score;
 
 module.exports = {game, newGame, showScore, addTurn, lightsOn}; // {} -> exporting more than one object/function from the file
